@@ -1,0 +1,10 @@
+h2. HTML5 Canvas Demo for jQuery Conference
+
+*Note, this demo _cannot_ be run from the <tt>file:</tt> protocol. Be sure to serve from a web server.*
+
+*Mac users can start a quick server using these commands via the Terminal:*
+
+<pre><code>
+cd /path/to/html5-sample
+python -m SimpleHTTPServer
+</code></pre>

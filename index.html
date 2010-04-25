@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <title>Sample HTML5 Generator</title>
+  <link rel="stylesheet" href="sample.css" type="text/css" media="screen" title="no title" charset="utf-8" />
+  
+  
+  <script src="jquery-1.4.2.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var template = new Image(), canvas, context;
+    
+    $(template).load(function(){
+      setup();
+    });
+    
+    function setup(){
+      // Setup Canvas
+      canvas  = document.createElement('canvas');
+      context = canvas.getContext('2d');
+      
+      // Setup CSS
+      $("head").append("<style type='text/css'></style>");
+      changeTileColor($("li:first"));
+      
+      $('ul').delegate('li', 'click', function(e){
+        changeTileColor($(this));
+      });
+    }
+    
+    function changeTileColor($el){
+      
+      var $colors = $el.children(),
+          color = $colors.first().css('backgroundColor'),
+          background = $colors.last().css('backgroundColor');
+      
+      // Clears the canvas every time
+      canvas.width = 100;
+      canvas.height = 100;
+      
+      context.fillStyle = color;
+      context.fillRect(0, 0, canvas.width, canvas.height);
+
+      context.globalCompositeOperation = "destination-out";
+      
+      // Apply the image
+      context.drawImage( template, 0, 0);
+
+      // Generate the base64 encoded string
+      var data = canvas.toDataURL('image/png'),
+          css  = "body { background: " + background + " url(" + data + ") repeat; }";
+          
+      $("style").replaceWith("<style type='text/css'>" + css + "</style>");
+    }
+    
+    template.src = "sample.png";
+  </script>
+</head>
+<body>
+  <div>Click to Change Background Color
+  <ul>
+    <li>
+      <span style="background: #AA0000"></span>
+      <span style="background: #BB0000"></span>
+    </li>
+    <li>
+      <span style="background: #990d84"></span>
+      <span style="background: #cb31b4"></span>
+    </li>
+    <li>
+      <span style="background: #454543"></span>
+      <span style="background: #81823b"></span>
+    </li>
+    <li>
+      <span style="background: #3b7782"></span>
+      <span style="background: #2babc2"></span>
+    </li>
+  </ul>
+  </div>
+</body>
+</html>
